@@ -7,23 +7,8 @@ if (isset($_POST['email']) and isset($_POST['upass'])){
 
 $email = $_POST['email'];
 $upass = $_POST['upass'];
-$upass = md5($upass);
-
-$query = "SELECT * FROM admin WHERE email='$email' and upass='$upass'";
- 
-$result = mysqli_query($connection, $query) or die(mysqli_error($connection));
-$count = mysqli_num_rows($result);
-
-if ($count > 0){
-$_SESSION['email']=$email;
-}else{
-
-$msg = "<div class='alert alert-danger'>
-						<button class='close' data-dismiss='alert'>&times;</button>
-						  Invalid Email or Password!
-                   
-			  </div>";
-}
+$login=new USER();
+$stmt =$login->login($email, $upass);
 }
 
 if (isset($_SESSION['email'])){

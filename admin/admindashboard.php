@@ -21,7 +21,7 @@ if (!isset($_SESSION['email'])) {
 
 <head>
 <meta charset="utf-8">
-<title>Preschool - Bootstrap Admin Template</title>
+<title>SEADDO Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
 <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -64,7 +64,7 @@ if (!isset($_SESSION['email'])) {
 <div class="page-header">
 <div class="row">
 <div class="col-md-6">
-<h3 class="page-title mb-0">Dashboard</h3>
+<h3 class="page-title mb-0">Dashboard ---- Hello <?php echo $_SESSION['email']; ?></h3>
 </div>
 <div class="col-md-6">
 <ul class="breadcrumb mb-0 p-0 float-right">
