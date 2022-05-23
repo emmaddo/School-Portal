@@ -19,28 +19,28 @@
 <li class="submenu">
 <a href="#"><img src="assets/img/sidebar/icon-2.png" alt="icon"> <span> Teachers</span> <span class="menu-arrow"></span></a>
 <ul class="list-unstyled" style="display: none;">
-<li><a href="all-teachers.html"><span>All Teachers</span></a></li>
-<li><a href="add-teacher.html"><span>Add Teacher</span></a></li>
-<li><a href="edit-teacher.html"><span>Edit Teacher</span></a></li>
-<li><a href="about-teacher.html"><span>About Teacher</span></a></li>
+<li><a href="all-teachers.php"><span>All Teachers</span></a></li>
+<li><a href="add-teacher.php"><span>Add Teacher</span></a></li>
+<li><a href="edit-teacher.php"><span>Edit Teacher</span></a></li>
+<li><a href="about-teacher.php"><span>About Teacher</span></a></li>
 </ul>
 </li>
 <li class="submenu">
 <a href="#"><img src="assets/img/sidebar/icon-3.png" alt="icon"> <span> Students</span> <span class="menu-arrow"></span></a>
 <ul class="list-unstyled" style="display: none;">
-<li><a href="all-students.html"><span>All Students</span></a></li>
-<li><a href="add-student.html"><span>Add Student</span></a></li>
-<li><a href="edit-student.html"><span>Edit Student</span></a></li>
-<li><a href="about-student.html"><span>ABout student</span></a></li>
+<li><a href="all-students.php"><span>All Students</span></a></li>
+<li><a href="add-student.php"><span>Add Student</span></a></li>
+<li><a href="edit-student.php"><span>Edit Student</span></a></li>
+<li><a href="about-student.php"><span>ABout student</span></a></li>
 </ul>
 </li>
 <li class="submenu">
 <a href="#"><img src="assets/img/sidebar/icon-4.png" alt="icon"> <span> Parents</span> <span class="menu-arrow"></span></a>
 <ul class="list-unstyled" style="display: none;">
-<li><a href="all-parents.html"><span>All Parents</span></a></li>
-<li><a href="add-parent.html"><span>Add Parent</span></a></li>
-<li><a href="edit-parent.html"><span>Edit Parent</span></a></li>
-<li><a href="about-parent.html"><span>About Parent</span></a></li>
+<li><a href="all-parents.php"><span>All Parents</span></a></li>
+<li><a href="add-parent.php"><span>Add Parent</span></a></li>
+<li><a href="edit-parent.php"><span>Edit Parent</span></a></li>
+<li><a href="about-parent.php"><span>About Parent</span></a></li>
 </ul>
 </li>
 <li class="submenu">
@@ -49,11 +49,11 @@
 <li class="submenu">
 <a href="javascript:void(0);"><span>Email</span> <span class="menu-arrow"></span></a>
 <ul style="display: none;">
-<li><a href="compose.html"><span>Compose Mail</span></a></li>
+<li><a href="compose.php"><span>Compose Mail</span></a></li>
 <li>
-<a href="inbox.html"> <span> Inbox</span> </a>
+<a href="inbox.php"> <span> Inbox</span> </a>
 </li>
-<li><a href="mail-view.html"><span>Mailview</span></a></li>
+<li><a href="mail-view.php"><span>Mailview</span></a></li>
 </ul>
 </li>
 <li>
@@ -68,7 +68,7 @@
 </ul>
 </li>
 <li>
-<a href="contacts.html"><span> Contacts</span></a>
+<a href="contacts.php"><span> Contacts</span></a>
 </li>
 </ul>
 </li>
