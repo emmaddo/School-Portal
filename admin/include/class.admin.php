@@ -26,8 +26,10 @@ class USER {
             if ($stmt->rowCount() == 1) {
                 if ($userRow['verified_count'] == "Y") {
                     if ($userRow['upass'] == md5($upass)) {
-                        $_SESSION['userSession'] = $userRow['id'];
-                        return true;
+                        //$_SESSION['userSession'] = $userRow['id'];
+						$_SESSION['email'] = $userRow['email'];
+                        //return true;
+						header("Location: admindashboard.php");
                     } else {
                         header("Location: login.php?error");
                         exit;
