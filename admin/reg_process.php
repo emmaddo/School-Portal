@@ -74,7 +74,7 @@ if (isset($_POST['s_register'])) {
 		$msg = "
 		      <div class='alert alert-success'>
 				<button class='close' data-dismiss='alert'>&times;</button>
-					<strong>Success:</strong>  Registration Success...
+					<strong>Success:</strong>  Registration Successful...
 			  </div>
 			  ";	
 		}
