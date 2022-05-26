@@ -12,36 +12,26 @@ if (!isset($_SESSION['email'])) {
 
     exit();
 }
-
-$user_home = new USER();
-
-
-
-$stmt = $user_home->runQuery("SELECT * FROM account WHERE type ='student' ORDER BY id DESC LIMIT 200");
+if(isset($_GET['crit'])){
+$crit=base64_decode($_GET['crit']);
+$stmt = $reg_user->runQuery("SELECT * FROM account WHERE email='$crit'");
 $stmt->execute();
-
-if (isset($_POST['delstudent'])) {
-	$id = trim($_POST['id']);
-	if ($reg_user->del($id)) {
-		/**$msg = "
-		      <div class='alert alert-success'>
-				<button class='close' data-dismiss='alert'>&times;</button>
-					<strong>Success:</strong>  Student Records Deleted Successfully...
-			  </div>
-			  ";
-**/
-header("location:all-students.php");			  
-		}
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-?>
 
+
+include("edit_process.php");
+	
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
 <meta charset="utf-8">
-<title>All Students</title>
+<title>Register Student</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
 <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -53,7 +43,7 @@ header("location:all-students.php");
 <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
 <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
 
-<link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="assets/plugins/datetimepicker/css/tempusdominus-bootstrap-4.min.css">
 
 <link rel="stylesheet" href="assets/css/select2.min.css">
 
@@ -74,130 +64,200 @@ header("location:all-students.php");
 <!-- sidebar comes here -->
 <?php include("include/sidebar.php"); ?>
 
+
 <div class="page-wrapper">
 <div class="content container-fluid">
 <div class="page-header">
 <div class="row">
 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-<h5 class="text-uppercase mb-0 mt-0 page-title">students List &nbsp;&nbsp;&nbsp; <?php if(isset($msg)) echo $msg;  ?></h5>
+<h5 class="text-uppercase mb-0 mt-0 page-title">Edit Student &nbsp;&nbsp;&nbsp; <?php if(isset($msg)) echo $msg;  ?> </h5>
 </div>
 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
 <ul class="breadcrumb float-right p-0 mb-0">
-<li class="breadcrumb-item"><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-<li class="breadcrumb-item"><a href="#">Students</a></li>
-<li class="breadcrumb-item"><span> Students List</span></li>
+<li class="breadcrumb-item"><a href="index.html"><I class="fas fa-home"></i> Home</a></li>
+<li class="breadcrumb-item"><a href="all-students.php">All Student</a></li>
+<li class="breadcrumb-item"><span> Edit Student Student</span></li>
 </ul>
 </div>
 </div>
 </div>
+<div class="page-content">
 <div class="row">
-<div class="col-sm-4 col-12">
+<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+<div class="card">
+<div class="card-body">
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+<form class="custom-mt-form"  method="POST">
+<div class="form-group">
+<label>Firstname</label>
+<input name="fname" type="text" value=<?php echo $row['fname']; ?> class="form-control">
 </div>
-<div class="col-sm-8 col-12 text-right add-btn-col">
-<a href="add-student.html" class="btn btn-primary float-right btn-rounded"><i class="fas fa-plus"></i> Add Student</a>
-<div class="view-icons">
-<a href="all-students.html" class="grid-view btn btn-link"><i class="fas fa-th"></i></a>
-<a href="students-list.html" class="list-view btn btn-link active"><i class="fas fa-bars"></i></a>
+<div class="form-group">
+<label>Lastname</label>
+<input name="lname"  type="text" value=<?php echo $row['lname']; ?> class="form-control">
 </div>
+<div class="form-group">
+<label>Email</label>
+<input name="email"  type="text" value=<?php echo $row['email']; ?> class="form-control" readonly>
 </div>
+<div class="form-group">
+<label>Password</label>
+<input name="pass"  type="password" value="xxxxx" class="form-control" readonly>
 </div>
-<div class="content-page">
-<div class="row filter-row">
-<div class="col-sm-6 col-md-3">
-<div class="form-group form-focus">
-<input type="text" class="form-control floating">
-<label class="focus-label">Student ID</label>
-</div>
-</div>
-<div class="col-sm-6 col-md-3">
-<div class="form-group form-focus">
-<input type="text" class="form-control floating">
-<label class="focus-label">Student Name</label>
-</div>
-</div>
-<div class="col-sm-6 col-md-3">
-<div class="form-group form-focus select-focus">
-<select class="select form-control">
-<option>Select class</option>
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-<option>6</option>
-<option>7</option>
-<option>8</option>
-<option>9</option>
-<option>10</option>
+
+<div class="form-group">
+<label>Gender</label>
+<select name="gender" class="form-control select">
+<option value="<?php echo $row['gender']; ?>"><?php echo $row['gender']; ?></option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
 </select>
-<label class="focus-label">Class</label>
 </div>
+<div class="form-group">
+<label>Birth Date</label>
+<input name="dob"  class="form-control" type="text" value=<?php echo $row['dob']; ?> data-toggle="datetimepicker">
 </div>
-<div class="col-sm-6 col-md-3">
-<a href="#" class="btn btn-search rounded btn-block mb-3"> search </a>
+<div class="form-group">
+<label>Class</label>
+<select name="class"  type="text" class="form-control" >
+<option value="<?php echo $row['class']; ?>"><?php echo $row['class']; ?></option>
+<option value="Creche">Creche</option>
+<option value="Play Group">Play Group</option>
+<option value="Lower KG">Lower KG</option>
+<option value="Upper KG">Upper KG</option>
+<option value="Lower Nursery">Lower Nursery</option>
+<option value="Upper Nursery">Upper Nursery</option>
+<option value="Year One">Year One</option>
+<option value="Year Two">Year Two</option>
+<option value="Year Three">Year Three</option>
+<option value="Year Four">Year Four</option>
+<option value="Year Five">Year Five</option>
+</select>
 </div>
+<div class="form-group">
+<label>Religion</label>
+<input name="religion"  type="text" value=<?php echo $row['religion']; ?> class="form-control">
 </div>
+
+</div>
+<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+
+<div class="form-group">
+<label>Middlename</label>
+<input name="mname"  type="text" value=<?php echo $row['mname']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Joining Date</label>
+<input name="joining_date"  class="form-control datetimepicker-input datetimepicker" type="text" value=<?php echo $row['joining_date']; ?> data-toggle="datetimepicker">
+</div>
+
+<div class="form-group">
+<label>Mobile number</label>
+<input name="phone"  type="text" value=<?php echo $row['phone']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Comfirm Password</label>
+<input name="cpassword"  type="password" value="xxxxxx" class="form-control" readonly>
+</div>
+<div class="form-group">
+<label>Admission No</label>
+<input name="admission_no"  type="text" value=<?php echo $row['admission_no']; ?> class="form-control">
+</div>
+
+<div class="form-group">
+<label>Section</label>
+<input name="section"  type="text" value=<?php echo $row['section']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Admission Year</label>
+<input name="admission_year"  type="text" value=<?php echo $row['admission_year']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Admission Term</label>
+<input name="admission_term"  type="text" value=<?php echo $row['admission_term']; ?> class="form-control">
+</div>
+
+
+</div>
+<div class="mt-4">
 <div class="row">
-<div class="col-lg-12 mb-3">
-<div class="table-responsive">
-<table class="table custom-table datatable">
-<thead class="thead-light">
-<tr>
-<th>SN </th>
-<th>Name </th>
-<th>Student URN</th>
-<th>Gender</th>
-<th>Parents Name</th>
-<th>Class</th>
-<th>Section</th>
-<th> Address</th>
-<th>Date of Birth</th>
-<th>Email</th>
-<th>Mobile</th>
-<th class="text-right">Action</th>
-</tr>
-</thead>
-<tbody>
-<?php 
-$i=1;
-?>
+<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+<div class="page-title ml-3">Parents information</div>
+</div>
+</div>
+</div>
+<div class="card-body w-100 p-3">
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 
-	<?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)){?>
-	
-	<tr>
-<td>
-<?php echo $i++; ?>
-</td>
-<td><?php echo $row['fname']; ?> <?php echo $row['mname']; ?> <?php echo $row['lname']; ?></td>
-<td><?php echo $row['urn']; ?> </td>
-<td><?php echo $row['gender']; ?></td>
-<td><?php echo $row['father_name']; ?></td>
-<td><?php echo $row['class']; ?></td>
-<td><?php echo $row['section']; ?></td>
-<td><?php echo $row['father_address']; ?></td>
-<td><?php echo $row['dob']; ?></td>
-<td><?php echo $row['email']; ?></td>
-<td><?php echo $row['phone']; ?></td>
-<td class="text-right">
+<div class="form-group">
+<label>Father Name</label>
+<input name="father_name"  type="text" value=<?php echo $row['father_name']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Father Occupation</label>
+<input name="father_occupation"  type="text" value=<?php echo $row['father_occupation']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Father Mobile Number</label>
+<input name="father_phone"  type="text" value=<?php echo $row['father_phone']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Father Address</label>
+<textarea name="father_address" class="form-control" rows="4"><?php echo $row['father_address']; ?></textarea>
+</div>
 
-<form method="Post">
-<a href="edit-student.php?crit=<?php echo base64_encode($row['email']); ?>" class="btn btn-primary btn-sm mb-1">
-<i class="far fa-edit"></i>
-</a>
-<input type="hidden" value=<?php echo $row['id']; ?> name="id" >
-<!--<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">-->
-<button type="submit" name="delstudent" onclick="return confirm('Do you really want to delete this student record?');" class="btn btn-danger btn-sm mb-1">
-<i class="far fa-trash-alt"></i>
-</button>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+
+<div class="form-group">
+<label>Mother Name</label>
+<input name="mother_name"  type="text" value=<?php echo $row['mother_name']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Mother Occupation</label>
+<input name="mother_occupation"  type="text" value=<?php echo $row['mother_occupation']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Mother Mobile Number</label>
+<input name="mother_phone"  type="text" value=<?php echo $row['mother_phone']; ?> class="form-control">
+</div>
+<div class="form-group">
+<label>Mother Address</label>
+<textarea name="mother_address" class="form-control" rows="4"><?php echo $row['mother_address']; ?></textarea>
+</div>
+
+</div>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+
+<div class="form-group">
+<label>Student Image</label>
+<input name="student_image"  type="file" value=<?php echo $row['student_image']; ?> name="pic" accept="image/*" class="form-control">
+</div>
+
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+
+<div class="form-group">
+<label>Parent Image</label>
+<input name="parent_image"  type="file" value=<?php echo $row['parent_image']; ?> name="pic" accept="image/*" class="form-control">
+</div>
+
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+
+<div class="form-group text-center custom-mt-form-group">
+<button class="btn btn-primary mr-2" name="update_student" type="submit">Submit</button>
+<button class="btn btn-secondary" type="reset">Cancel</button>
+</div>
 </form>
-</td>
-</tr>
-	
-	<?php } ?>
-
-
-</tbody>
-</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -228,7 +288,7 @@ $i=1;
 <a href="chat.html">
 <div class="list-item new-message">
 <div class="list-left">
-<span class="avatar">R</span>
+<span class="avatar">J</span>
 </div>
 <div class="list-body">
 <span class="message-author">Ruth C. Gault</span>
@@ -272,7 +332,7 @@ $i=1;
 <li>
 <a href="chat.html">
 <div class="list-item">
-<div class="list-left">
+ <div class="list-left">
 <span class="avatar">C</span>
 </div>
 <div class="list-body">
@@ -293,7 +353,7 @@ $i=1;
 <div class="list-body">
 <span class="message-author"> Domenic Houston </span>
 <span class="message-time">12:28 AM</span>
- <div class="clearfix"></div>
+<div class="clearfix"></div>
 <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
 </div>
 </div>
@@ -400,7 +460,7 @@ $i=1;
 <span class="message-time">12:28 AM</span>
 <div class="clearfix"></div>
 <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-</div>
+ </div>
 </div>
 </a>
 </li>
@@ -412,34 +472,14 @@ $i=1;
 </div>
 </div>
 </div>
+
 </div>
 
-<div id="delete_employee" class="modal" role="dialog">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content modal-md">
-<div class="modal-header">
-<h4 class="modal-title">Delete student</h4>
-</div>
-<form>
-<div class="modal-body">
-<p>Are you sure want to delete this?</p>
-<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-<button type="submit" class="btn btn-danger">Delete</button>
-</div>
-</div>
-</form>
-</div>
-</div>
-</div>
-</div>
-
-<script data-cfasync="false" src="../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery-3.6.0.min.js"></script>
+<script src="assets/js/jquery-3.6.0.min.js"></script>
 
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 
 <script src="assets/js/jquery.slimscroll.js"></script>
-<script src="assets/js/jquery.dataTables.min.js"></script>
-<script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
 <script src="assets/js/select2.min.js"></script>
 <script src="assets/js/moment.min.js"></script>
